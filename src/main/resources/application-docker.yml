@@ -1,0 +1,47 @@
+server:
+  port: 8081
+
+ui:
+  cors:
+    allowed-origins: http://ui:3000, http://api:8081
+    maxAge: 300
+    allowed-methods: POST, GET, OPTIONS, HEAD, PUT, PATCH, DELETE
+
+spring:
+  datasource:
+    url: jdbc:mysql://mysqldb:3306/bank?useSSL=false
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+    testWhileIdle: true
+    validationQuery: SELECT 1
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://keycloak:8080/auth/realms/kursovoiRealm
+          jwk-set-uri: http://keycloak:8080/auth/realms/kursovoiRealm/protocol/openid-connect/certs
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: kursovoibankingnoreply@gmail.com
+    password: rcuthggmhekvtrtj
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+keycloak:
+  auth-url: http://keycloak:8080/realms/kursovoiRealm/protocol/openid-connect/token
+  app-client-id: kursovoi-app
+  admin-client-id: admin-cli
